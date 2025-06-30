@@ -46,7 +46,7 @@ const Navbar = () => {
               key={_idx}
               href={item.path}
             >
-              {item.label}
+             <Button variant={"outline"} className="cursor-pointer"> {item.label}</Button>
             </Link>
           ))}
         </div>
