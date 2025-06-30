@@ -3,7 +3,7 @@ import {
   SignedOut,
   SignInButton,
   SignUpButton,
-  UserButton,
+  UserButton
 } from "@clerk/nextjs";
 import React from "react";
 import { Button } from "./ui/button";
@@ -15,11 +15,11 @@ const Navbar = () => {
         <h1 className="font-extrabold text-2xl">LMS Platform</h1>
       </div>
       <div className="flex justify-end items-center p-4 gap-4 h-16">
-        <SignedOut>
+        <SignedOut >
           <Button variant={"outline"} className="cursor-pointer">
-            <SignInButton />
+            <SignInButton forceRedirectUrl="/dashboard"/>
           </Button>
-          <SignUpButton>
+          <SignUpButton forceRedirectUrl="/dashboard">
             <Button className=" cursor-pointer">Sign Up</Button>
           </SignUpButton>
         </SignedOut>
