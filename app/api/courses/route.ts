@@ -20,7 +20,7 @@ export const POST = async(request:NextRequest) => {
                 instructorId:userId
             }
         })
-        console.log("----------",userId)
+        
         return  NextResponse.json(newCourse,{status:200})
 
     } catch (error) {
