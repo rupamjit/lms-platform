@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 export const POST = async(request:NextRequest) => {
     try {
-        const {userId} = auth()
+        const {userId} =  await auth()
 
         if(!userId) {
             return new NextResponse("UnAuthorized",{status:401});
@@ -20,8 +20,8 @@ export const POST = async(request:NextRequest) => {
                 instructorId:userId
             }
         })
-
-        return  NextResponse.json(newCourse,{status:400})
+        console.log("----------",userId)
+        return  NextResponse.json(newCourse,{status:200})
 
     } catch (error) {
         console.log("new course create:",error)

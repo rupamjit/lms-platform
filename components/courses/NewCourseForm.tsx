@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ComboBox } from "../custom/ComboBox";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -37,6 +40,8 @@ interface CreateCourseProps {
 }
 
 const NewCourseForm = ({ categories }: CreateCourseProps) => {
+  const router = useRouter();
+
   // 1. Define  form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,10 +53,15 @@ const NewCourseForm = ({ categories }: CreateCourseProps) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post("/api/courses", values);
+      router.push(`/instructor/courses/${response.data.id}/basic`);
+      toast.success("New Courses Created Successfully!!!");
+    } catch (error) {
+      console.log("Failed to create new course", error);
+      toast.error("Something Went Wrong");
+    }
   }
 
   return (
@@ -71,7 +81,10 @@ const NewCourseForm = ({ categories }: CreateCourseProps) => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Ex. Web Developmet Course For Beginners" {...field} />
+                  <Input
+                    placeholder="Ex. Web Developmet Course For Beginners"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>Enter Title of Your Course</FormDescription>
                 <FormMessage />

@@ -20,7 +20,7 @@ const CreateCourse = async () => {
           value: category.id,
           subCategories: category.subCategories.map((subcategory) => ({
             label: subcategory.name,
-            value: subcategory.name,
+            value: subcategory.id,
           })),
         }))}
       />

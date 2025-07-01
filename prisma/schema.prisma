@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Course {
-  id           Int     @id @default(autoincrement())
+  id           String     @id @default(uuid())
   instructorId String
   title        String  @unique
   subtitle     String?
