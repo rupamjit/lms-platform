@@ -13,7 +13,7 @@ model Course {
   title        String  @unique
   subtitle     String?
   description  String?
-  price        Float   @unique
+  price        Float?   @unique
   imageUrl     String?
   isPublished  Boolean @default(false)
 
@@ -28,6 +28,10 @@ model Course {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
+
+  @@index([categoryId])
+  @@index([subCategoryId])
+  @@index([levelId])
 }
 
 model Category {
@@ -50,12 +54,12 @@ model SubCategory {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([name, categoryId]) 
+    @@index([categoryId])
 }
 
 model Level {
   id      String   @id @default(uuid())
-  name    String   @unique
+  name    String   
   courses Course[]
 
   createdAt DateTime @default(now())
