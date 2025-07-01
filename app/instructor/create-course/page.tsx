@@ -1,9 +1,31 @@
-import React from 'react'
+import NewCourseForm from "@/components/courses/NewCourseForm";
+import db from "@/lib/db";
+import React from "react";
 
-const CreateCourse = () => {
+const CreateCourse = async () => {
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+    include: {
+      subCategories: true,
+    },
+  });
+
   return (
-    <div>CreateCourse</div>
-  )
-}
+    <div>
+      <NewCourseForm
+        categories={categories.map((category) => ({
+          label: category.name,
+          value: category.id,
+          subCategories: category.subCategories.map((subcategory) => ({
+            label: subcategory.name,
+            value: subcategory.name,
+          })),
+        }))}
+      />
+    </div>
+  );
+};
 
-export default CreateCourse
+export default CreateCourse;
